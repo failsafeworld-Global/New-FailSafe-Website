@@ -219,7 +219,10 @@ if(!CONFIGURED){
     const pw = el("pw").value.trim();
     if(!pw){ el("gateErr").textContent="Enter the password."; return; }
     try{ await signInWithEmailAndPassword(auth, SHARED_EMAIL, pw); }
-    catch(e){ el("gateErr").textContent="Incorrect password."; }
+    catch(e){
+  console.error(e);
+  el("gateErr").textContent = e.code + " — " + e.message;
+}
   };
   el("unlock").addEventListener("click", doUnlock);
   el("pw").addEventListener("keydown", e=>{ if(e.key==="Enter") doUnlock(); });
